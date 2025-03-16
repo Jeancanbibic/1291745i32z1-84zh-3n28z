@@ -1,32 +1,31 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
 const testimonials = [
   {
-    content: "SocialPartner hat meine Online-Präsenz komplett transformiert. Innerhalb weniger Wochen erhielt ich Anfragen von Top-Unternehmen. Ihr personalisierter Ansatz und die Liebe zum Detail haben den Unterschied gemacht.",
+    content: "ProzessExpress hat meine Online-Präsenz komplett transformiert. Innerhalb weniger Wochen erhielt ich Anfragen von Top-Unternehmen. Ihr personalisierter Ansatz und die Liebe zum Detail haben den Unterschied gemacht.",
     author: "Jessica Chen",
     role: "Leiterin für Produktmarketing",
     company: "Tech Innovators GmbH",
     image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
   },
   {
-    content: "Ich war skeptisch gegenüber Personal-Branding-Diensten, aber SocialPartner hat alle meine Erwartungen übertroffen. Sie haben eine Strategie entwickelt, die sich für mich authentisch anfühlte und mich gleichzeitig strategisch für Führungspositionen positionierte. Nach nur 3 Monaten habe ich meinen Traumjob bekommen!",
+    content: "Ich war skeptisch gegenüber Personal-Branding-Diensten, aber ProzessExpress hat alle meine Erwartungen übertroffen. Sie haben eine Strategie entwickelt, die sich für mich authentisch anfühlte und mich gleichzeitig strategisch für Führungspositionen positionierte. Nach nur 3 Monaten habe ich meinen Traumjob bekommen!",
     author: "Michael Rodriguez",
     role: "Technischer Direktor",
     company: "Future Solutions",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
   },
   {
-    content: "Das Team von SocialPartner hilft nicht nur bei der Online-Präsenz – sie verändert komplett, wie du in deiner Branche wahrgenommen wirst. Ihr strategischer Ansatz und die Branchenverbindungen sind unbezahlbar. Jeden Cent wert.",
+    content: "Das Team von ProzessExpress hilft nicht nur bei der Online-Präsenz – sie verändert komplett, wie du in deiner Branche wahrgenommen wirst. Ihr strategischer Ansatz und die Branchenverbindungen sind unbezahlbar. Jeden Cent wert.",
     author: "Alexa Thompson",
     role: "VP Operations",
     company: "Global Enterprises",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
   },
   {
-    content: "Als jemand, der immer mit Eigenwerbung zu kämpfen hatte, half mir SocialPartner, meine Expertise auf authentische Weise zu präsentieren. Ihr personalisierter Ansatz und die kontinuierliche Unterstützung ließen den gesamten Prozess natürlich und effektiv wirken.",
+    content: "Als jemand, der immer mit Eigenwerbung zu kämpfen hatte, half mir ProzessExpress, meine Expertise auf authentische Weise zu präsentieren. Ihr personalisierter Ansatz und die kontinuierliche Unterstützung ließen den gesamten Prozess natürlich und effektiv wirken.",
     author: "David Park",
     role: "Leiter Data Science",
     company: "Analytics Pro",

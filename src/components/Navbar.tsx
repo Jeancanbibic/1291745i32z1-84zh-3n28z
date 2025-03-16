@@ -1,8 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,17 +10,29 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      // Früher einsetzen des Navbar-Effekts für ein angenehmeres Erlebnis
+      setIsScrolled(window.scrollY > 10);
       
-      // Aktiven Menüpunkt basierend auf Scroll-Position aktualisieren
-      const sections = ['about', 'services', 'testimonials', 'qualification'];
+      // Verbesserte Berechnung des aktiven Abschnitts
+      const sections = ['hero', 'about', 'services', 'testimonials', 'cta', 'contact'];
       let currentSection = '';
+      
+      // Dynamischere Berechnung mit Vorrang für den Abschnitt näher an der Bildschirmmitte
+      let closestSectionDistance = Infinity;
       
       sections.forEach(section => {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          if (rect.top <= 200 && rect.bottom >= 200) {
+          const distanceToCenter = Math.abs(rect.top + rect.height/2 - window.innerHeight/2);
+          
+          // Wenn der Abschnitt im Viewport und näher an der Mitte als der vorherige
+          if (
+            rect.top < window.innerHeight &&
+            rect.bottom > 0 &&
+            distanceToCenter < closestSectionDistance
+          ) {
+            closestSectionDistance = distanceToCenter;
             currentSection = section;
           }
         }
@@ -31,6 +42,9 @@ const Navbar = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
+    // Initial auslösen für korrekte Anzeige beim Laden
+    handleScroll();
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -39,94 +53,97 @@ const Navbar = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300",
         isScrolled 
-          ? "py-3 bg-white/80 backdrop-blur-md shadow-subtle" 
-          : "py-5 bg-transparent"
+          ? "py-2 bg-white/90 backdrop-blur-md shadow-subtle" 
+          : "py-4 bg-transparent"
       )}
     >
-      <div className="max-container px-6 md:px-12 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <div className="flex items-center">
-          <a href="#" className="text-xl font-serif font-medium text-foreground relative group" aria-label="SocialPartner Home">
-            <span className="text-turquoise-600 relative">
-              Social
+          <a 
+            href="#hero" 
+            className="text-xl font-serif font-medium text-foreground relative group" 
+            aria-label="ProzessExpress Home"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            <span className="text-turquoise-600 relative group-hover:text-turquoise-700 transition-colors duration-300">
+              Prozess
               <span className="absolute -right-1 -top-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <Sparkles size={12} className="text-turquoise-400" />
+                <Sparkles className="h-4 w-4 text-turquoise-400" />
               </span>
             </span>
-            <span>Partner</span>
-            <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-turquoise-500 group-hover:w-full transition-all duration-300"></div>
+            <span className="text-gray-800 group-hover:text-gray-900 transition-colors duration-300">Express</span>
           </a>
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        {/* Desktop Navigation - verbesserte Animationen und Interaktivität */}
+        <div className="hidden md:flex items-center space-x-1">
           <NavLinks activeSection={activeSection} />
+          
+          {/* Call-to-Action-Button mit verbessertem Hover-Effekt */}
           <Button 
-            className="rounded-full bg-turquoise-500 hover:bg-turquoise-600 text-white button-hover-effect group relative overflow-hidden"
-            onClick={() => document.querySelector('#qualification')?.scrollIntoView({ behavior: 'smooth' })}
+            variant="default" 
+            size="sm" 
+            className="ml-4 bg-turquoise-600 hover:bg-turquoise-700 text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+            }}
           >
-            <span className="relative z-[1] flex items-center">
-              Starten Sie jetzt 
-              <Sparkles className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-turquoise-600 to-turquoise-400 transform translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
+            <span className="mr-1">Kontakt</span>
+            <Sparkles className="h-3.5 w-3.5" />
           </Button>
-        </nav>
+        </div>
 
-        {/* Mobile Menu Toggle */}
-        <button 
-          className="md:hidden text-foreground" 
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Menü öffnen/schließen"
-        >
-          <svg 
-            width="24" 
-            height="24" 
-            viewBox="0 0 24 24" 
-            fill="none"
-            className={cn("transition-transform duration-300", 
-              isMobileMenuOpen ? "rotate-90" : ""
-            )}
+        {/* Mobile Menu Toggle - verbesserte Animationen */}
+        <div className="md:hidden">
+          <button
+            type="button"
+            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-turquoise-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-turquoise-500 transition-all duration-200"
+            aria-expanded="false"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
+            <span className="sr-only">Menü öffnen</span>
             {isMobileMenuOpen ? (
-              <path 
-                d="M18 6L6 18M6 6L18 18" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              />
+              <X className="block h-6 w-6" aria-hidden="true" />
             ) : (
-              <path 
-                d="M4 6H20M4 12H20M4 18H20" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              />
+              <Menu className="block h-6 w-6" aria-hidden="true" />
             )}
-          </svg>
-        </button>
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div 
+      {/* Mobile Menu - verbesserte Animationen und Übergänge */}
+      <div
         className={cn(
-          "md:hidden fixed left-0 right-0 top-[57px] z-40 bg-white/95 backdrop-blur-md transition-all duration-300 ease-smooth shadow-md",
+          "md:hidden absolute top-full left-0 right-0 transition-all duration-300 ease-in-out bg-white/95 backdrop-blur-md shadow-lg",
           isMobileMenuOpen 
             ? "opacity-100 translate-y-0 pointer-events-auto" 
             : "opacity-0 -translate-y-4 pointer-events-none"
         )}
       >
-        <div className="p-6 flex flex-col space-y-6">
-          <NavLinks mobile setIsMobileMenuOpen={setIsMobileMenuOpen} activeSection={activeSection} />
+        <div className="px-4 pt-4 pb-6 space-y-1">
+          <NavLinks 
+            mobile 
+            setIsMobileMenuOpen={setIsMobileMenuOpen} 
+            activeSection={activeSection} 
+          />
+          
+          {/* Mobiler CTA-Button */}
           <Button 
-            className="w-full rounded-full bg-turquoise-500 hover:bg-turquoise-600 text-white"
-            onClick={() => {
-              document.querySelector('#qualification')?.scrollIntoView({ behavior: 'smooth' });
+            variant="default" 
+            size="default" 
+            className="w-full mt-4 bg-turquoise-600 hover:bg-turquoise-700 text-white"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
               setIsMobileMenuOpen(false);
             }}
           >
-            Starten Sie jetzt
+            <span className="mr-1">Kontakt aufnehmen</span>
+            <Sparkles className="h-4 w-4" />
           </Button>
         </div>
       </div>
@@ -141,49 +158,48 @@ interface NavLinksProps {
 }
 
 const NavLinks = ({ mobile, setIsMobileMenuOpen, activeSection }: NavLinksProps) => {
-  const navItems = [
-    { name: 'Über uns', href: '#about' },
-    { name: 'Leistungen', href: '#services' },
-    { name: 'Referenzen', href: '#testimonials' },
-    { name: 'Qualifikation', href: '#qualification' },
+  const links = [
+    { href: '#about', label: 'Über uns', id: 'about' },
+    { href: '#services', label: 'Leistungen', id: 'services' },
+    { href: '#testimonials', label: 'Referenzen', id: 'testimonials' },
+    { href: '#cta', label: 'Qualifikation', id: 'cta' },
   ];
 
-  const handleClick = (href: string) => {
-    if (setIsMobileMenuOpen) {
-      setIsMobileMenuOpen(false);
+  const handleClick = (href: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    const targetId = href.substring(1);
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      if (mobile && setIsMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
     }
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <>
-      {navItems.map((item) => {
-        const isActive = activeSection === item.href.substring(1);
-        return (
-          <a 
-            key={item.name}
-            href={item.href}
-            onClick={(e) => {
-              e.preventDefault();
-              handleClick(item.href);
-            }}
-            className={cn(
-              "relative text-foreground hover:text-turquoise-700 transition-colors duration-300",
-              mobile ? "block py-2 text-lg" : "font-medium",
-              isActive ? "text-turquoise-600" : "",
-              "after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-turquoise-500 after:transition-all after:duration-300",
-              isActive ? "after:w-full" : "after:w-0 hover:after:w-full"
-            )}
-          >
-            {item.name}
-            {isActive && !mobile && (
-              <span className="absolute -right-2 -top-1">
-                <Sparkles size={10} className="text-turquoise-400" />
-              </span>
-            )}
-          </a>
-        );
-      })}
+      {links.map((link) => (
+        <a
+          key={link.href}
+          href={link.href}
+          onClick={handleClick(link.href)}
+          className={cn(
+            mobile 
+              ? "block px-3 py-3 text-base font-medium border-b border-gray-100" 
+              : "inline-flex items-center px-3 py-2 text-sm font-medium rounded-md",
+            activeSection === link.id
+              ? "text-turquoise-700 bg-turquoise-50/70"
+              : "text-gray-600 hover:text-turquoise-600 hover:bg-gray-50/80",
+            "transition-all duration-200 relative"
+          )}
+        >
+          {link.label}
+          {activeSection === link.id && (
+            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-turquoise-500 hidden md:block" />
+          )}
+        </a>
+      ))}
     </>
   );
 };

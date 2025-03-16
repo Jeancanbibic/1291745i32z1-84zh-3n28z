@@ -4,7 +4,7 @@ import { ArrowUpRight, Star, Users, Sparkles, BarChart, Clock, Award } from 'luc
 
 const HeroSection = () => {
   return (
-    <div className="relative min-h-screen bg-beige-50 text-black overflow-hidden">
+    <div className="relative min-h-screen bg-beige-50 text-black overflow-hidden" id="hero">
       {/* Hintergrund-Effekte */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-400/5 rounded-full blur-[120px] animate-pulse" />
@@ -28,24 +28,23 @@ const HeroSection = () => {
             {/* Headline - neuer Stil wie in AboutSection, aber größer */}
             <div className="mb-10">
               <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                <span className="block mb-2">Außergewöhnliche</span>
-                <span className="block mb-2">Talente entdecken,</span>
-                <span className="block text-teal-600">die Ihr Team stärken</span>
+                <span className="block mb-2">Planbar mehr</span>
+                <span className="block mb-2">qualifizierte</span>
+                <span className="block text-teal-600">Bewerber</span>
               </h2>
             </div>
 
             {/* Description */}
             <p className="text-lg text-black mb-14 max-w-xl leading-relaxed">
-              Nutzen Sie strategische Social Media Kampagnen und zielgerichtetes Recruiting, 
-              um die perfekten Kandidaten für Ihr Unternehmen zu gewinnen – schneller und effizienter.
+              Wir bringen die richtigen Mitarbeiter, senken Ihre Kosten und sorgen für langfristigen Erfolg
             </p>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-3 gap-5 mb-14">
               {[
-                { icon: Award, value: '94%', label: 'Erfolgsquote' },
-                { icon: Clock, value: '36h', label: 'Erste Kandidaten' },
-                { icon: BarChart, value: '3.2x', label: 'Zeitersparnis' }
+                { icon: Award, value: '94%', label: 'Erfolgsrate' },
+                { icon: Clock, value: '48h', label: 'Prozessstart' },
+                { icon: BarChart, value: '60%', label: 'Kostenersparnis' }
               ].map((stat, i) => (
                 <div key={i} className="relative group">
                   <div className="absolute inset-0 bg-white rounded-xl group-hover:scale-105 transition-all duration-300" />
@@ -60,13 +59,21 @@ const HeroSection = () => {
 
             {/* CTA Section */}
             <div className="flex flex-wrap items-center gap-6">
-              <Button className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300 flex items-center gap-2 group shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20">
-                <span>Jetzt durchstarten</span>
+              <Button className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300 flex items-center gap-2 group shadow-lg shadow-teal-500/10 hover:shadow-teal-500/20"
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
+                <span>Prozess optimieren</span>
                 <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
               </Button>
-              <a href="#" className="text-teal-600 hover:text-teal-700 transition-colors duration-300 flex items-center gap-2 font-medium">
+              <a 
+                href="#testimonials" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="text-teal-600 hover:text-teal-700 transition-colors duration-300 flex items-center gap-2 font-medium"
+              >
                 <Star className="w-5 h-5 text-teal-500" />
-                <span>Erfolgsgeschichten</span>
+                <span>Referenzen ansehen</span>
               </a>
             </div>
           </div>
@@ -94,8 +101,8 @@ const HeroSection = () => {
                       <Award className="w-4 h-4 text-teal-600" />
                     </div>
                     <div>
-                      <div className="text-xs font-medium text-teal-600">Top-Qualität</div>
-                      <div className="text-sm font-bold text-black">94% Vermittlungsrate</div>
+                      <div className="text-xs font-medium text-teal-600">Garantierte Qualität</div>
+                      <div className="text-sm font-bold text-black">94% Erfolgsrate</div>
                     </div>
                   </div>
                 </div>
@@ -106,8 +113,8 @@ const HeroSection = () => {
                       <Clock className="w-4 h-4 text-teal-600" />
                     </div>
                     <div>
-                      <div className="text-xs font-medium text-teal-600">Schnelle Lösung</div>
-                      <div className="text-sm font-bold text-black">3.2x schneller besetzt</div>
+                      <div className="text-xs font-medium text-teal-600">Express-Start</div>
+                      <div className="text-sm font-bold text-black">48h Prozessstart</div>
                     </div>
                   </div>
                 </div>

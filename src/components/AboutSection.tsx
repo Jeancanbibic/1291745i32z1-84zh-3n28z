@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { BriefcaseIcon, UsersIcon, UserIcon, AwardIcon } from 'lucide-react';
 import { cn } from "@/lib/utils";
@@ -47,23 +46,23 @@ const AboutSection = () => {
   const features = [
     {
       icon: <UserIcon className="w-10 h-10 text-turquoise-600" />,
-      title: "Personal Branding",
-      description: "Verwandeln Sie Ihre Online-Präsenz in ein wertvolles berufliches Instrument, das Sie für Recruiter hervorhebt."
+      title: "Digitale Präsenz",
+      description: "Wir sorgen dafür, dass Ihr Unternehmen genau dann sichtbar ist, wenn es zählt – strategisch und gezielt an den richtigen Orten, wo sich die passenden Bewerber aufhalten."
     },
     {
       icon: <BriefcaseIcon className="w-10 h-10 text-turquoise-600" />,
-      title: "Karrierechancen",
-      description: "Erschließen Sie exklusive Jobmöglichkeiten mit unserem Netzwerk erstklassiger Arbeitgeber, die nach außergewöhnlichen Talenten suchen."
+      title: "Technologischer Vorsprung",
+      description: "Wir setzen moderne Technologien ein, um den Rekrutierungsprozess zu erleichtern, ohne den menschlichen Faktor aus den Augen zu verlieren. So erzielen wir die besten Ergebnisse."
     },
     {
       icon: <UsersIcon className="w-10 h-10 text-turquoise-600" />,
-      title: "Netzwerk-Wachstum",
-      description: "Vernetzen Sie sich mit Branchenführern und Gleichgesinnten, um Ihren Einfluss und Ihre Reichweite zu erweitern."
+      title: "Intelligente Bewerberprozesse",
+      description: "Durch individuell abgestimmte Prozesse stellen wir sicher, dass nur die passendsten Kandidaten den gesamten Auswahlprozess durchlaufen – was Ihre Einstellungsquote deutlich steigert."
     },
     {
       icon: <AwardIcon className="w-10 h-10 text-turquoise-600" />,
-      title: "Branchenrenommee",
-      description: "Etablieren Sie sich durch strategische Inhalte und Positionierung als Vordenker in Ihrem Fachgebiet."
+      title: "Attraktive Arbeitgebermarke",
+      description: "Bewerber suchen mehr als nur ein Gehalt – sie wollen Wertschätzung, Verantwortung und ein Umfeld, in dem sie wachsen können. Wir helfen Ihnen, Ihr Unternehmen als solchen Arbeitgeber zu positionieren."
     }
   ];
 
@@ -82,10 +81,10 @@ const AboutSection = () => {
             Über Uns
           </span>
           <h2 className="text-3xl md:text-4xl font-semibold mb-6">
-            Warum führende Fachleute <span className="text-gradient">SocialPartner</span> wählen
+            Was ihren <span className="text-gradient">Erfolg</span> ausmacht
           </h2>
           <p className="text-muted-foreground text-lg">
-            Wir schließen die Lücke zwischen außergewöhnlichen Talenten und erstklassigen Möglichkeiten durch strategisches Personal Branding und Recruitment-Lösungen.
+            Wir unterstützen Sie mit innovativen Lösungen und bewährten Strategien, um die besten Talente für Ihr Unternehmen zu gewinnen.
           </p>
         </div>
 
@@ -129,7 +128,7 @@ const AboutSection = () => {
                 ))}
               </div>
               <p className="text-sm italic mb-2">
-                "SocialPartner hat meine Online-Präsenz transformiert und Türen geöffnet, die ich nie für möglich gehalten hätte."
+                "ProzessExpress hat meine Online-Präsenz transformiert und Türen geöffnet, die ich nie für möglich gehalten hätte."
               </p>
               <p className="font-medium text-sm">Sarah J., Senior Product Manager</p>
             </div>
@@ -143,7 +142,7 @@ const AboutSection = () => {
               Wir verbinden <span className="text-gradient">Strategie</span> mit persönlicher Authentizität
             </h2>
             <p className="text-muted-foreground mb-6">
-              Bei SocialPartner verstehen wir, dass jeder Fachmann einzigartige Stärken und Karriereziele hat. Unser maßgeschneiderter Ansatz stellt sicher, dass Ihre persönliche Marke Ihre Expertise authentisch widerspiegelt und Sie gleichzeitig strategisch für Chancen positioniert, die mit Ihren Zielen übereinstimmen.
+              Bei ProzessExpress verstehen wir, dass jeder Fachmann einzigartige Stärken und Karriereziele hat. Unser maßgeschneiderter Ansatz stellt sicher, dass Ihre persönliche Marke Ihre Expertise authentisch widerspiegelt und Sie gleichzeitig strategisch für Chancen positioniert, die mit Ihren Zielen übereinstimmen.
             </p>
             <div className="space-y-4">
               {[
