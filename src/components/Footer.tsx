@@ -15,7 +15,6 @@ import {
   Send,
   CheckCircle
 } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -100,22 +99,8 @@ const Footer = () => {
     <footer className="bg-gray-900 text-white pt-20 pb-8 relative overflow-hidden">
       {/* Hintergrundeffekte */}
       <div className="absolute inset-0 -z-10">
-        <motion.div 
-          className="absolute -left-64 -top-64 w-[500px] h-[500px] rounded-full bg-turquoise-600/5 blur-[100px]"
-          animate={{
-            scale: [1, 1.05, 1],
-            opacity: [0.3, 0.4, 0.3]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div 
-          className="absolute -right-64 bottom-0 w-[600px] h-[600px] rounded-full bg-beige-400/5 blur-[80px]"
-          animate={{
-            scale: [1, 1.08, 1],
-            opacity: [0.2, 0.3, 0.2]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        />
+        <div className="absolute -left-64 -top-64 w-[500px] h-[500px] rounded-full bg-turquoise-600/5 blur-[100px] opacity-30" />
+        <div className="absolute -right-64 bottom-0 w-[600px] h-[600px] rounded-full bg-beige-400/5 blur-[80px] opacity-20" />
         
         {/* Subtiles Muster */}
         <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(rgba(255,255,255,0.25)_1px,transparent_1px)] [background-size:24px_24px]"></div>
@@ -133,19 +118,18 @@ const Footer = () => {
             {/* Kontaktinfos */}
             <div className="space-y-4">
               {contactInfo.map((item, idx) => (
-                <motion.a
+                <a
                   key={idx}
                   href={item.href}
                   target={item.icon === MapPin ? "_blank" : undefined}
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-gray-400 hover:text-turquoise-400 transition-colors group"
-                  whileHover={{ x: 4 }}
                 >
                   <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0 group-hover:bg-turquoise-900/30">
                     <item.icon size={14} className="group-hover:text-turquoise-400" />
                   </div>
                   <span>{item.label}</span>
-                </motion.a>
+                </a>
               ))}
             </div>
           </div>
@@ -173,11 +157,7 @@ const Footer = () => {
             <h3 className="font-semibold text-white mb-6">Newsletter abonnieren</h3>
             
             {isSubmitted ? (
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="p-4 bg-gray-800 rounded-xl border border-gray-700"
-              >
+              <div className="p-4 bg-gray-800 rounded-xl border border-gray-700">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-turquoise-900/50 flex items-center justify-center flex-shrink-0">
                     <CheckCircle size={16} className="text-turquoise-400" />
@@ -187,7 +167,7 @@ const Footer = () => {
                     <p className="text-gray-400 text-sm">Vielen Dank für Ihr Interesse.</p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ) : (
               <form onSubmit={handleNewsletterSubmit}>
                 <p className="text-gray-400 mb-4">
@@ -217,17 +197,16 @@ const Footer = () => {
               <h3 className="font-semibold text-white mb-4">Folgen Sie uns</h3>
               <div className="flex gap-3">
                 {socialLinks.map((social, idx) => (
-                  <motion.a
+                  <a
                     key={idx}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-turquoise-900/40 hover:text-turquoise-400 text-gray-400 transition-all"
-                    whileHover={{ y: -4 }}
+                    className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-turquoise-900/40 hover:text-turquoise-400 text-gray-400 transition-all hover:-translate-y-1"
                     aria-label={social.name}
                   >
                     <social.icon size={18} />
-                  </motion.a>
+                  </a>
                 ))}
               </div>
             </div>
@@ -240,14 +219,13 @@ const Footer = () => {
             © {currentYear} ProzessExpress. Alle Rechte vorbehalten.
           </p>
           
-          <motion.button
+          <button
             onClick={scrollToTop}
-            className="group flex items-center gap-2 py-2 px-4 bg-gray-800 hover:bg-gray-700 rounded-full text-gray-400 hover:text-white transition-all"
-            whileHover={{ y: -2 }}
+            className="group flex items-center gap-2 py-2 px-4 bg-gray-800 hover:bg-gray-700 rounded-full text-gray-400 hover:text-white transition-all hover:-translate-y-1"
           >
             <span>Nach oben</span>
             <ArrowUp size={16} className="group-hover:animate-bounce" />
-          </motion.button>
+          </button>
         </div>
       </div>
     </footer>

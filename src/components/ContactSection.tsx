@@ -1,14 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from '@/hooks/use-toast';
 import { ArrowRightIcon, PhoneIcon, MailIcon, MapPinIcon, LinkedinIcon, CalendarIcon, CheckCircleIcon } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 const ContactSection = () => {
-  const formRef = useRef<HTMLFormElement>(null);
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -71,22 +69,8 @@ const ContactSection = () => {
     <section id="contact" className="relative py-24 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
       {/* Hintergrundeffekte */}
       <div className="absolute inset-0 -z-10">
-        <motion.div 
-          className="absolute -right-64 -top-64 w-[600px] h-[600px] rounded-full bg-turquoise-200/10 blur-[100px]"
-          animate={{
-            scale: [1, 1.05, 1],
-            opacity: [0.3, 0.4, 0.3]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div 
-          className="absolute -left-64 -bottom-64 w-[500px] h-[500px] rounded-full bg-beige-300/10 blur-[80px]"
-          animate={{
-            scale: [1, 1.08, 1],
-            opacity: [0.2, 0.3, 0.2]
-          }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        />
+        <div className="absolute -right-64 -top-64 w-[600px] h-[600px] rounded-full bg-turquoise-200/10 blur-[100px] opacity-30" />
+        <div className="absolute -left-64 -bottom-64 w-[500px] h-[500px] rounded-full bg-beige-300/10 blur-[80px] opacity-20" />
         
         {/* Subtiles Muster */}
         <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#00CC99_1px,transparent_1px)] [background-size:20px_20px]"></div>
@@ -94,65 +78,31 @@ const ContactSection = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Überschrift */}
-        <motion.div 
-          className="text-center max-w-3xl mx-auto mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
-          <motion.span 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-block px-4 py-1.5 mb-6 rounded-full bg-turquoise-100 text-turquoise-800 text-sm font-medium border border-turquoise-200/40"
-          >
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <span className="inline-block px-4 py-1.5 mb-6 rounded-full bg-turquoise-100 text-turquoise-800 text-sm font-medium border border-turquoise-200/40">
             KONTAKTIEREN SIE UNS
-          </motion.span>
+          </span>
           
-          <motion.h2 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl md:text-5xl font-semibold mb-6 text-gray-900"
-          >
+          <h2 className="text-4xl md:text-5xl font-semibold mb-6 text-gray-900">
             Lassen Sie uns ins <span className="text-turquoise-600">Gespräch</span> kommen
-          </motion.h2>
+          </h2>
           
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-xl text-gray-600"
-          >
+          <p className="text-xl text-gray-600">
             Wir freuen uns darauf, mehr über Ihre Anforderungen zu erfahren und Ihnen bei der Suche nach qualifizierten Mitarbeitern zu helfen.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
         
         {/* Kontaktbereich */}
         <div className="grid md:grid-cols-12 gap-10">
           {/* Linke Spalte - Kontaktformular */}
-          <motion.div 
-            className="md:col-span-7 bg-white rounded-2xl shadow-lg p-8 border border-gray-100 relative overflow-hidden"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
+          <div className="md:col-span-7 bg-white rounded-2xl shadow-lg p-8 border border-gray-100 relative overflow-hidden">
             {/* Formularüberschrift */}
             <h3 className="text-2xl font-semibold mb-6 text-gray-800">
               Schreiben Sie uns eine Nachricht
             </h3>
             
             {isSubmitted ? (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="py-12 flex flex-col items-center text-center"
-              >
+              <div className="py-12 flex flex-col items-center text-center">
                 <div className="w-16 h-16 rounded-full bg-turquoise-100 flex items-center justify-center mb-6">
                   <CheckCircleIcon size={32} className="text-turquoise-600" />
                 </div>
@@ -167,9 +117,9 @@ const ContactSection = () => {
                 >
                   Neues Formular
                 </Button>
-              </motion.div>
+              </div>
             ) : (
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="name" className="text-gray-700">Name</Label>
@@ -179,7 +129,7 @@ const ContactSection = () => {
                       placeholder="Ihr vollständiger Name"
                       value={formState.name}
                       onChange={handleChange}
-                      className="rounded-lg border-gray-300 focus:border-turquoise-500 focus:ring focus:ring-turquoise-500/20 transition-all"
+                      className="rounded-lg border-gray-300 focus:border-turquoise-500 focus:ring focus:ring-turquoise-500/20"
                       required
                     />
                   </div>
@@ -193,7 +143,7 @@ const ContactSection = () => {
                       placeholder="Ihre E-Mail-Adresse"
                       value={formState.email}
                       onChange={handleChange}
-                      className="rounded-lg border-gray-300 focus:border-turquoise-500 focus:ring focus:ring-turquoise-500/20 transition-all"
+                      className="rounded-lg border-gray-300 focus:border-turquoise-500 focus:ring focus:ring-turquoise-500/20"
                       required
                     />
                   </div>
@@ -209,7 +159,7 @@ const ContactSection = () => {
                       placeholder="Ihre Telefonnummer"
                       value={formState.phone}
                       onChange={handleChange}
-                      className="rounded-lg border-gray-300 focus:border-turquoise-500 focus:ring focus:ring-turquoise-500/20 transition-all"
+                      className="rounded-lg border-gray-300 focus:border-turquoise-500 focus:ring focus:ring-turquoise-500/20"
                     />
                   </div>
                   
@@ -221,7 +171,7 @@ const ContactSection = () => {
                       placeholder="Name Ihres Unternehmens"
                       value={formState.company}
                       onChange={handleChange}
-                      className="rounded-lg border-gray-300 focus:border-turquoise-500 focus:ring focus:ring-turquoise-500/20 transition-all"
+                      className="rounded-lg border-gray-300 focus:border-turquoise-500 focus:ring focus:ring-turquoise-500/20"
                     />
                   </div>
                 </div>
@@ -234,7 +184,7 @@ const ContactSection = () => {
                     placeholder="Wie können wir Ihnen helfen?"
                     value={formState.message}
                     onChange={handleChange}
-                    className="min-h-[120px] rounded-lg border-gray-300 focus:border-turquoise-500 focus:ring focus:ring-turquoise-500/20 transition-all"
+                    className="min-h-[120px] rounded-lg border-gray-300 focus:border-turquoise-500 focus:ring focus:ring-turquoise-500/20"
                     required
                   />
                 </div>
@@ -242,118 +192,87 @@ const ContactSection = () => {
                 <div className="pt-2">
                   <Button 
                     type="submit" 
-                    className="w-full py-6 bg-turquoise-600 hover:bg-turquoise-700 rounded-lg transition-all group"
+                    className="w-full py-6 bg-turquoise-600 hover:bg-turquoise-700 rounded-lg"
                     disabled={isSubmitting}
                   >
                     <span className="mr-2">
                       {isSubmitting ? "Wird gesendet..." : "Nachricht senden"}
                     </span>
-                    <ArrowRightIcon size={18} className="transition-transform group-hover:translate-x-1" />
+                    <ArrowRightIcon className="w-5 h-5" />
                   </Button>
                 </div>
-                
-                <p className="text-sm text-gray-500 text-center mt-4">
-                  Wir respektieren Ihre Privatsphäre und werden Ihre Daten nicht an Dritte weitergeben.
-                </p>
               </form>
             )}
-          </motion.div>
-          
+          </div>
+
           {/* Rechte Spalte - Kontaktinformationen und Karte */}
-          <motion.div 
-            className="md:col-span-5 space-y-8"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-          >
+          <div className="md:col-span-5 space-y-8">
             {/* Kontaktinformationen */}
-            <div className="bg-gray-900 text-white rounded-2xl p-8 shadow-lg">
-              <h3 className="text-2xl font-semibold mb-8 text-white">Kontaktinformationen</h3>
+            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+              <h3 className="text-2xl font-semibold mb-6 text-gray-800">
+                Kontaktinformationen
+              </h3>
               
               <div className="space-y-6">
-                {contactInfo.map((item, idx) => (
-                  <motion.a
-                    key={idx}
-                    href={item.link}
-                    target={item.icon === MapPinIcon || item.icon === LinkedinIcon ? "_blank" : undefined}
+                {contactInfo.map((info, index) => (
+                  <a
+                    key={index}
+                    href={info.link}
+                    target={info.icon === MapPinIcon ? "_blank" : undefined}
                     rel="noopener noreferrer"
-                    className="flex items-start gap-4 group"
-                    whileHover={{ x: 5 }}
-                    transition={{ duration: 0.2 }}
+                    className="flex items-start gap-4 text-gray-600 hover:text-turquoise-600"
                   >
-                    <div className="mt-1 w-10 h-10 rounded-full bg-turquoise-500/20 flex items-center justify-center flex-shrink-0">
-                      <item.icon size={18} className="text-turquoise-400" />
+                    <div className="w-12 h-12 rounded-full bg-turquoise-50 flex items-center justify-center flex-shrink-0">
+                      <info.icon className="w-5 h-5 text-turquoise-600" />
                     </div>
                     <div>
-                      <p className="text-gray-400 text-sm">{item.title}</p>
-                      <p className="text-white group-hover:text-turquoise-400 transition-colors">
-                        {item.value}
-                      </p>
+                      <h4 className="font-medium text-gray-900 mb-1">{info.title}</h4>
+                      <p>{info.value}</p>
                     </div>
-                  </motion.a>
+                  </a>
                 ))}
               </div>
-              
-              <div className="mt-10 pt-8 border-t border-gray-800">
-                <h4 className="font-medium mb-4 text-white">Unsere Öffnungszeiten</h4>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Montag - Freitag:</span>
-                    <span className="text-white">9:00 - 18:00 Uhr</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Samstag - Sonntag:</span>
-                    <span className="text-white">Geschlossen</span>
-                  </div>
-                </div>
-              </div>
             </div>
-            
+
             {/* Terminvereinbarung */}
-            <motion.div 
-              className="bg-gradient-to-br from-turquoise-50 to-turquoise-100/50 rounded-2xl p-8 border border-turquoise-200/30"
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-turquoise-600 text-white flex items-center justify-center flex-shrink-0">
-                  <CalendarIcon size={24} />
+            <div className="bg-turquoise-600 rounded-2xl shadow-lg p-8 text-white">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                  <CalendarIcon className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-1">
-                    Beratungstermin vereinbaren
-                  </h3>
-                  <p className="text-gray-600">
-                    Sichern Sie sich einen persönlichen Beratungstermin mit einem unserer Experten.
-                  </p>
+                  <h3 className="text-xl font-semibold">Terminvereinbarung</h3>
+                  <p className="text-turquoise-100">Buchen Sie ein persönliches Gespräch</p>
                 </div>
               </div>
               
+              <p className="mb-6 text-turquoise-50">
+                Vereinbaren Sie einen Termin für ein persönliches Beratungsgespräch. Wir nehmen uns Zeit für Ihre Anliegen.
+              </p>
+              
               <Button 
-                className="w-full bg-turquoise-600 hover:bg-turquoise-700 transition-all group"
-                onClick={() => document.getElementById('cta')?.scrollIntoView({ behavior: 'smooth' })}
+                className="w-full bg-white text-turquoise-600 hover:bg-turquoise-50"
+                onClick={() => window.open('https://calendly.com/prozessexpress', '_blank')}
               >
-                <span className="mr-2">Termin anfragen</span>
-                <ArrowRightIcon size={16} className="transition-transform group-hover:translate-x-1" />
+                Termin vereinbaren
+                <ArrowRightIcon className="w-5 h-5 ml-2" />
               </Button>
-            </motion.div>
-          </motion.div>
-        </div>
-        
-        {/* Google Maps Einbettung */}
-        <motion.div 
-          className="mt-16 rounded-2xl overflow-hidden shadow-lg border border-gray-100 h-[400px] bg-gray-100"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-        >
-          {/* Hier würde der eigentliche Google Maps iFrame eingebettet werden */}
-          <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
-            Google Maps-Karte würde hier angezeigt werden
+            </div>
+
+            {/* Google Maps Einbettung */}
+            <div className="rounded-2xl overflow-hidden shadow-lg h-[300px] bg-gray-100">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2428.409042569214!2d13.384161776680424!3d52.52000867210282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c655f20989%3A0x26bbfb4e84674c63!2sBrandenburg%20Gate!5e0!3m2!1sen!2sde!4v1687890762024!5m2!1sen!2sde"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

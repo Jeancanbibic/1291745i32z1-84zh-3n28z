@@ -1,6 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { cn } from "@/lib/utils";
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import React, { memo, useEffect } from 'react';
+import { Quote } from 'lucide-react';
+
+interface Testimonial {
+  content: string;
+  author: string;
+  role: string;
+  company: string;
+  image: string;
+}
+
+interface TestimonialCardProps {
+  testimonial: Testimonial;
+}
 
 const testimonials = [
   {
@@ -33,203 +44,86 @@ const testimonials = [
   }
 ];
 
+// Funktion zum Vorladen aller Testimonial-Bilder
+const preloadImages = () => {
+  testimonials.forEach(testimonial => {
+    const img = new Image();
+    img.src = testimonial.image;
+  });
+};
+
+// Optimierte TestimonialCard Komponente mit verbessertem Caching
+const TestimonialCard = memo<TestimonialCardProps>(({ testimonial }) => (
+  <div 
+    className="bg-gray-50 rounded-lg p-6 border border-gray-200 print:break-inside-avoid"
+    style={{ contain: 'none' }} // Verhindert content-visibility Optimierungen
+  >
+    <div style={{ containIntrinsicSize: '1px 5000px' }}> {/* Feste Größe für den Render-Cache */}
+      <Quote size={24} className="text-gray-400 mb-4" />
+      <p className="text-gray-700 mb-6">
+        "{testimonial.content}"
+      </p>
+      <div className="flex items-center">
+        <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-200 mr-4">
+          <img 
+            src={testimonial.image} 
+            alt={testimonial.author}
+            className="w-full h-full object-cover"
+            loading="eager"
+            decoding="sync"
+            width={48}
+            height={48}
+            style={{ contentVisibility: 'visible' }}
+          />
+        </div>
+        <div>
+          <h4 className="font-semibold text-gray-900">{testimonial.author}</h4>
+          <p className="text-gray-600 text-sm">{testimonial.role}, {testimonial.company}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+));
+
+TestimonialCard.displayName = 'TestimonialCard';
+
 const TestimonialSection = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [autoplayEnabled, setAutoplayEnabled] = useState(true);
-
+  // Bilder beim ersten Laden vorladen
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animated');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const currentSection = sectionRef.current;
-    if (currentSection) {
-      const animatedElements = currentSection.querySelectorAll('.animate-on-scroll');
-      animatedElements.forEach((el) => observer.observe(el));
-    }
-
-    // Autoplay für Testimonials
-    let autoplayInterval: ReturnType<typeof setInterval>;
-    
-    if (autoplayEnabled && !isHovering) {
-      autoplayInterval = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-      }, 6000);
-    }
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!sectionRef.current) return;
-      
-      const rect = sectionRef.current.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
-      const y = ((e.clientY - rect.top) / rect.height - 0.5) * 10;
-      
-      setMousePosition({ x, y });
-    };
-
-    currentSection?.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      if (currentSection) {
-        const animatedElements = currentSection.querySelectorAll('.animate-on-scroll');
-        animatedElements.forEach((el) => observer.unobserve(el));
-        currentSection.removeEventListener('mousemove', handleMouseMove);
-      }
-      
-      clearInterval(autoplayInterval);
-    };
-  }, [currentIndex, isHovering, autoplayEnabled]);
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
-  };
-
-  const handleDotClick = (index: number) => {
-    setCurrentIndex(index);
-  };
+    preloadImages();
+  }, []);
 
   return (
     <section 
       id="testimonials" 
-      ref={sectionRef} 
-      className="py-24 md:py-32 bg-beige-50 relative overflow-hidden"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      className="py-16 bg-white print:py-8"
+      style={{ contentVisibility: 'visible', containIntrinsicSize: '1px 5000px' }}
     >
-      <div className="absolute inset-0 -z-10 opacity-40">
-        <div 
-          className="absolute -top-20 -left-20 w-96 h-96 rounded-full bg-turquoise-100 filter blur-3xl transition-transform duration-500" 
-          style={{ transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)` }}
-        />
-        <div 
-          className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-beige-200 filter blur-3xl transition-transform duration-500" 
-          style={{ transform: `translate(${mousePosition.x * -0.5}px, ${mousePosition.y * -0.5}px)` }}
-        />
-        
-        {/* Zusätzliche dynamische Hintergrundelemente */}
-        <div 
-          className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-turquoise-200/30 filter blur-2xl transition-transform duration-700" 
-          style={{ transform: `translate(${mousePosition.x * 0.2}px, ${mousePosition.y * 0.2}px) rotate(${mousePosition.x}deg)` }}
-        />
-        <div 
-          className="absolute bottom-1/4 left-1/3 w-64 h-64 rounded-full bg-beige-300/20 filter blur-xl transition-transform duration-700" 
-          style={{ transform: `translate(${mousePosition.x * -0.3}px, ${mousePosition.y * -0.3}px) scale(${1 + Math.abs(mousePosition.x) * 0.005})` }}
-        />
-      </div>
-
-      <div className="max-container px-6 md:px-12">
-        <div className="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
-          <span className="inline-block px-4 py-1.5 mb-6 rounded-full bg-beige-100 text-beige-900 font-medium text-sm">
-            Erfolgsgeschichten
-          </span>
-          <h2 className="text-3xl md:text-4xl font-semibold mb-6">
-            Was unsere <span className="text-gradient">Kunden</span> sagen
+      <div 
+        className="container mx-auto px-4"
+        style={{ contentVisibility: 'visible' }}
+      >
+        <div className="text-center mb-12 print:mb-8">
+          <h2 className="text-3xl font-bold mb-4">
+            Was unsere Kunden sagen
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Echte Erfahrungen von Fachleuten, die ihre Karriere mit unseren Personal Branding- und Recruiting-Services transformiert haben.
+          <p className="text-gray-600">
+            Echte Erfahrungen von Fachleuten
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto animate-on-scroll">
-          <div 
-            className="relative bg-white rounded-2xl shadow-subtle overflow-hidden transform-3d transition-all duration-500 hover:shadow-xl"
-            style={{ transform: `perspective(1000px) rotateX(${mousePosition.y * 0.05}deg) rotateY(${mousePosition.x * -0.05}deg)` }}
-            onMouseEnter={() => setAutoplayEnabled(false)}
-            onMouseLeave={() => setAutoplayEnabled(true)}
-          >
-            <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-r from-turquoise-400/20 to-beige-300/20"></div>
-            
-            <div className="pt-20 pb-12 px-6 md:px-12 min-h-[400px]">
-              <div className="relative">
-                {testimonials.map((testimonial, index) => (
-                  <div 
-                    key={index}
-                    className={cn(
-                      "transition-all duration-700 absolute inset-0",
-                      currentIndex === index 
-                        ? "opacity-100 translate-x-0 z-10" 
-                        : index < currentIndex 
-                          ? "opacity-0 -translate-x-full z-0" 
-                          : "opacity-0 translate-x-full z-0"
-                    )}
-                  >
-                    <div className="flex flex-col items-center text-center">
-                      <Quote size={48} className="mb-6 text-beige-400 animate-pulse-slow" />
-                      <p className="text-lg md:text-xl mb-8 max-w-2xl font-serif italic">
-                        "{testimonial.content}"
-                      </p>
-                      <div className="flex items-center mb-6 group">
-                        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-turquoise-100 mr-4 transition-all duration-300 group-hover:shadow-xl group-hover:border-turquoise-300 transform group-hover:scale-105">
-                          <img 
-                            src={testimonial.image} 
-                            alt={testimonial.author}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          />
-                        </div>
-                        <div className="text-left">
-                          <h4 className="font-semibold text-lg group-hover:text-turquoise-600 transition-colors duration-300">{testimonial.author}</h4>
-                          <p className="text-muted-foreground">{testimonial.role}, {testimonial.company}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-r from-beige-300/20 to-turquoise-400/20"></div>
-          </div>
-          
-          <div className="flex justify-between items-center mt-8">
-            <button 
-              onClick={handlePrev}
-              className="w-12 h-12 rounded-full bg-white shadow-subtle flex items-center justify-center hover:bg-turquoise-50 transition-all duration-300 transform hover:scale-105 hover:shadow-md group"
-              aria-label="Vorheriges Testimonial"
-            >
-              <ChevronLeft className="h-6 w-6 text-turquoise-600 group-hover:text-turquoise-700" />
-            </button>
-            
-            <div className="flex space-x-2">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleDotClick(index)}
-                  className={`h-3 rounded-full transition-all duration-300 ${
-                    index === currentIndex 
-                      ? 'bg-turquoise-500 w-8 shadow-md' 
-                      : 'bg-beige-300 hover:bg-beige-400 w-3'
-                  }`}
-                  aria-label={`Gehe zu Testimonial ${index + 1}`}
-                />
-              ))}
-            </div>
-            
-            <button 
-              onClick={handleNext}
-              className="w-12 h-12 rounded-full bg-white shadow-subtle flex items-center justify-center hover:bg-turquoise-50 transition-all duration-300 transform hover:scale-105 hover:shadow-md group"
-              aria-label="Nächstes Testimonial"
-            >
-              <ChevronRight className="h-6 w-6 text-turquoise-600 group-hover:text-turquoise-700" />
-            </button>
-          </div>
+        <div 
+          className="grid md:grid-cols-2 gap-6 print:gap-4"
+          style={{ containIntrinsicSize: '1px 5000px', contentVisibility: 'visible' }}
+        >
+          {testimonials.map((testimonial, index) => (
+            <TestimonialCard key={index} testimonial={testimonial} />
+          ))}
         </div>
       </div>
     </section>
   );
 };
 
-export default TestimonialSection;
+// Memo um unnötige Re-Renders zu verhindern
+export default memo(TestimonialSection);
