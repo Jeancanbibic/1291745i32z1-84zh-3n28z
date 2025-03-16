@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,30 +62,30 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom colors for the agency
-				beige: {
-					50: '#FDFAF5',
-					100: '#FAF6EE',
-					200: '#F5ECDC',
-					300: '#EFE2CA',
-					400: '#E9D8B8',
-					500: '#E3CEA6',
-					600: '#DABA84',
-					700: '#D0A662',
-					800: '#C79240',
-					900: '#A77834',
-				},
 				turquoise: {
-					50: '#EDFCFC',
-					100: '#D0F7F7',
-					200: '#A7EFEF',
-					300: '#7DE7E7',
-					400: '#54DFDF',
-					500: '#2AD7D7',
-					600: '#22ACAC',
-					700: '#198181',
-					800: '#115656',
-					900: '#082B2B',
+					'50': '#f0fdfa',
+					'100': '#ccfbf1',
+					'200': '#99f6e4',
+					'300': '#5eead4',
+					'400': '#2dd4bf',
+					'500': '#14b8a6',
+					'600': '#0d9488',
+					'700': '#0f766e',
+					'800': '#115e59',
+					'900': '#134e4a',
+					'950': '#042f2e',
+				},
+				beige: {
+					'50': '#fdf8f6',
+					'100': '#f2e8e5',
+					'200': '#eaddd7',
+					'300': '#e0cec7',
+					'400': '#d2bab0',
+					'500': '#bfa094',
+					'600': '#a18072',
+					'700': '#977669',
+					'800': '#846358',
+					'900': '#43302b',
 				},
 			},
 			borderRadius: {
@@ -140,7 +139,8 @@ export default {
 			boxShadow: {
 				'glass': '0 8px 32px rgba(0, 0, 0, 0.08)',
 				'subtle': '0 2px 10px rgba(0, 0, 0, 0.05)',
-				'hover': '0 10px 40px rgba(0, 0, 0, 0.12)'
+				'hover': '0 10px 40px rgba(0, 0, 0, 0.12)',
+				'custom': '0 4px 20px rgba(0, 0, 0, 0.08)',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -150,5 +150,5 @@ export default {
 			},
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [],
 } satisfies Config;
