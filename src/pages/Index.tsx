@@ -1,12 +1,12 @@
-
 import React, { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
 import TestimonialSection from '@/components/TestimonialSection';
-import QualificationSection from '@/components/QualificationSection';
 import ServicesSection from '@/components/ServicesSection';
+import { LogoCarouselDemo } from '@/components/ui/logo-carousel-demo';
 import Footer from '@/components/Footer';
+import CTASection from '@/components/CTASection';
 import { Helmet } from 'react-helmet-async';
 
 const Index = () => {
@@ -115,8 +115,9 @@ const Index = () => {
       <HeroSection />
       <AboutSection />
       <ServicesSection />
+      <LogoCarouselDemo />
       <TestimonialSection />
-      <QualificationSection />
+      <CTASection />
       <Footer />
     </div>
   );
